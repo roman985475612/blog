@@ -3,10 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Category;
+use App\Models\User;
 use Illuminate\Http\Request;
 
-class CategoriesController extends Controller
+class UsersController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,10 +15,10 @@ class CategoriesController extends Controller
      */
     public function index()
     {
-        $categories = Category::all();
+        $users = User::all();
 
-        return view('admin/categories/index', [
-            'categories' => $categories,
+        return view('admin.users.index', [
+            'users' => $users,
         ]);
     }
 
@@ -29,7 +29,7 @@ class CategoriesController extends Controller
      */
     public function create()
     {
-        return view('admin.categories.create');
+        return view('admin.users.create');
     }
 
     /**
@@ -41,53 +41,62 @@ class CategoriesController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'title' => 'required',
+            'name'     => 'required',
+            'email'    => 'required|email|unique:users',
+            'password' => 'required',
+            'avatar'   => 'nullable|image',
         ]);
 
-        Category::create($request->all());
+        $user = User::add($request->all());
 
-        return redirect()->route('categories.index');
+        if ($request->file('avatar'))
+            $user->uploadAvatar($request->file('avatar'));
+
+        return redirect()->route('users.index');
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Category  $category
+     * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function edit(Category $category)
+    public function edit(User $user)
     {
-        return view('admin.categories.edit', ['category' => $category]);
+        return view('admin.users.edit', [
+            'user' => $user,
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Category  $category
+     * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Category $category)
+    public function update(Request $request, User $user)
     {
         $this->validate($request, [
-            'title' => 'required',
+            'name' => 'required',
+            'email' => 'required',
         ]);
 
-        $category->update($request->all());
+        $user->update($request->all());
 
-        return redirect()->route('categories.index');
+        return redirect()->route('users.index');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Category  $category
+     * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Category $category)
+    public function destroy(User $user)
     {
-        $category->delete();
+        $user->delete();
 
-        return redirect()->route('categories.index');
+        return redirect()->route('users.index');
     }
 }

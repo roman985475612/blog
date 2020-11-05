@@ -12,20 +12,20 @@
 
     <!-- Main content -->
     <section class="content">
-      {!! Form::open(['route' => 'categories.store']) !!}
+      {!! Form::open(['route' => ['tags.update', $tag->id], 'method' => 'put']) !!}
       <!-- Default box -->
       <div class="box">
         <div class="box-header with-border">
-          <h3 class="box-title">Добавляем категорию</h3>
+          <h3 class="box-title">Редактируем категорию</h3>
           @include('admin.errors')
         </div>
         <div class="box-body">
           <div class="col-md-6">
             <div class="form-group">
               {{ Form::label('title', 'Название') }}
-              {{ Form::text('title', '', [
+              {{ Form::text('title', $tag->title, [
                 'class' => 'form-control', 
-                'placeholder' => 'Название категории',
+                'placeholder' => 'Название тега',
                 'autofocus',
               ]) }}
             </div>

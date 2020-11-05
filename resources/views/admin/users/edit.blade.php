@@ -5,29 +5,47 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Добавить категорию
+        Редактировать пользователя
         <small>приятные слова..</small>
       </h1>
     </section>
 
     <!-- Main content -->
     <section class="content">
-      {!! Form::open(['route' => 'categories.store']) !!}
+      {!! Form::open(['route' => ['users.update', $user->id], 'files' => true, 'method' => 'put']) !!}
       <!-- Default box -->
       <div class="box">
         <div class="box-header with-border">
-          <h3 class="box-title">Добавляем категорию</h3>
+          <h3 class="box-title">Редактируем пользователя</h3>
           @include('admin.errors')
         </div>
         <div class="box-body">
           <div class="col-md-6">
             <div class="form-group">
-              {{ Form::label('title', 'Название') }}
-              {{ Form::text('title', '', [
+              {{ Form::label('name', 'Имя') }}
+              {{ Form::text('name', $user->name, [
                 'class' => 'form-control', 
-                'placeholder' => 'Название категории',
+                'placeholder' => 'Имя',
                 'autofocus',
               ]) }}
+            </div>
+            <div class="form-group">
+              {{ Form::label('email', 'E-mail') }}
+              {{ Form::email('email', $user->email, [
+                'class' => 'form-control', 
+                'placeholder' => 'E-mail',
+              ]) }}
+            </div>
+            <div class="form-group">
+              {{ Form::label('password', 'Пароль') }}
+              {{ Form::password('password', [
+                'class' => 'form-control', 
+                'placeholder' => 'пароль',
+              ]) }}
+            </div>
+            <div class="form-group">
+              {{ Form::label('avatar', 'Аватар') }}
+              {{ Form::file('avatar') }}
             </div>
           </div>
         </div>

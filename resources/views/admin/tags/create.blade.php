@@ -12,7 +12,7 @@
 
     <!-- Main content -->
     <section class="content">
-      {!! Form::open(['route' => 'categories.store']) !!}
+      {!! Form::open(['route' => 'tags.store']) !!}
       <!-- Default box -->
       <div class="box">
         <div class="box-header with-border">
@@ -25,7 +25,7 @@
               {{ Form::label('title', 'Название') }}
               {{ Form::text('title', '', [
                 'class' => 'form-control', 
-                'placeholder' => 'Название категории',
+                'placeholder' => 'Название тега',
                 'autofocus',
               ]) }}
             </div>

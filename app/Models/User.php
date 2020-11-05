@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -79,29 +81,33 @@ class User extends Authenticatable
         $this->delete;
     }
 
-    public function uploadAvatar($image)
+    public function uploadAvatar(UploadedFile $avatar)
     {
-        if ($image === null) { return; }
-
-        $filename = str_random(10) . '.' . $image->extends;
+        $filename = md5_file($avatar) . '.' . $avatar->extension();
         
-        $image->saveAS('uploads', $filename);
+        $avatar->storeAs('uploads', $filename);
         
         $this->deleteAvatarIfExists();
-        $this->image = $filename;
+        $this->avatar = $filename;
         $this->save();
 
     }
 
-    public function getAvatar()
+    public function getAvatar(int $size = 64)
     {
-        return ($this->image) ? "/uploads/$this->image" : "https://fakeimg.pl/200x100/CCCCCC/?text=No%20avatar";
+        if ($this->avatar) {
+            return "/uploads/$this->avatar";
+        }
+
+        $digest = md5($this->email);
+
+        return "https://www.gravatar.com/avatar/{$digest}?d=identicon&s={$size}";
     }
 
     public function deleteAvatarIfExists()
     {           
-        if ($this->image !== null) {
-            Storage::delete('uploads/' . $this->image);
+        if ($this->avatar) {
+            Storage::delete('uploads/' . $this->avatar);
         }
     }
 
@@ -110,7 +116,7 @@ class User extends Authenticatable
         $this->is_admin = ($value) ? User::IS_ADMIN : User::NORMAL;
         $this->save();
 
-        return $this-is_admin;
+        return $this->is_admin;
     }
 
     public function toggleBan($value)

@@ -4,9 +4,10 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Category;
+use App\Models\Tag;
 use Illuminate\Http\Request;
 
-class CategoriesController extends Controller
+class TagsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,10 +16,10 @@ class CategoriesController extends Controller
      */
     public function index()
     {
-        $categories = Category::all();
+        $tags = Tag::all();
 
-        return view('admin/categories/index', [
-            'categories' => $categories,
+        return view('admin.tags.index', [
+            'tags' => $tags,
         ]);
     }
 
@@ -29,7 +30,7 @@ class CategoriesController extends Controller
      */
     public function create()
     {
-        return view('admin.categories.create');
+        return view('admin.tags.create');
     }
 
     /**
@@ -44,50 +45,52 @@ class CategoriesController extends Controller
             'title' => 'required',
         ]);
 
-        Category::create($request->all());
+        Tag::create($request->all());
 
-        return redirect()->route('categories.index');
+        return redirect()->route('tags.index');
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Category  $category
+     * @param  \App\Models\Tag  $tag
      * @return \Illuminate\Http\Response
      */
-    public function edit(Category $category)
+    public function edit(Tag $tag)
     {
-        return view('admin.categories.edit', ['category' => $category]);
+        return view('admin.tags.edit', [
+            'tag' => $tag,
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Category  $category
+     * @param  \App\Models\Tag  $tag
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Category $category)
+    public function update(Request $request, Tag $tag)
     {
         $this->validate($request, [
             'title' => 'required',
         ]);
 
-        $category->update($request->all());
+        $tag->update($request->all());
 
-        return redirect()->route('categories.index');
+        return redirect()->route('tags.index');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Category  $category
+     * @param  \App\Models\Tag  $tag
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Category $category)
+    public function destroy(Tag $tag)
     {
-        $category->delete();
+        $tag->delete();
 
-        return redirect()->route('categories.index');
+        return redirect()->route('tags.index');
     }
 }
