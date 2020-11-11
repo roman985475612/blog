@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class UsersController extends Controller
 {
@@ -17,9 +18,7 @@ class UsersController extends Controller
     {
         $users = User::all();
 
-        return view('admin.users.index', [
-            'users' => $users,
-        ]);
+        return view('admin.users.index', compact('users'));
     }
 
     /**
@@ -47,10 +46,9 @@ class UsersController extends Controller
             'avatar'   => 'nullable|image',
         ]);
 
-        $user = User::add($request->all());
-
-        if ($request->file('avatar'))
-            $user->uploadAvatar($request->file('avatar'));
+        User::add($request->all())
+            ->generatePassword($request->input('password'))
+            ->uploadAvatar($request->file('avatar'));
 
         return redirect()->route('users.index');
     }
@@ -63,9 +61,7 @@ class UsersController extends Controller
      */
     public function edit(User $user)
     {
-        return view('admin.users.edit', [
-            'user' => $user,
-        ]);
+        return view('admin.users.edit', compact('user'));
     }
 
     /**
@@ -79,10 +75,17 @@ class UsersController extends Controller
     {
         $this->validate($request, [
             'name' => 'required',
-            'email' => 'required',
+            'email' => [
+                'required',
+                'email',
+                Rule::unique('users')->ignore($user->id),
+            ],
+            'avatar' => 'nullable|image',
         ]);
 
-        $user->update($request->all());
+        $user->edit($request->all())
+             ->generatePassword($request->input('password'))
+             ->uploadAvatar($request->file('avatar'));
 
         return redirect()->route('users.index');
     }
@@ -95,7 +98,7 @@ class UsersController extends Controller
      */
     public function destroy(User $user)
     {
-        $user->delete();
+        $user->remove();
 
         return redirect()->route('users.index');
     }

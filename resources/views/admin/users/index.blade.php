@@ -44,12 +44,10 @@
                       <td>{{ $user->id }}</td>
                       <td>{{ $user->name }}</td>
                       <td>{{ $user->email }}</td>
-                      <td><img src="{{ $user->getAvatar() }}" height="100%" width="100"></td>
+                      <td><img src="{{ $user->getAvatar() }}" height="auto" width="100"></td>
                       <td>
                         <a href="{{ route('users.edit', ['user' => $user->id]) }}" class="fa fa-pencil"></a> 
-                        <a class="fa fa-remove deleteCategory" href="javascript:void(0);" id="{{$user->id}}"></a>
-                        {{ Form::open(['route' => ['users.destroy', $user->id], 'method' => 'delete', 'id' => 'formDelete'.$user->id]) }}
-                        {{ Form::close() }}
+                        @include('admin.inc._modalDelete', ['id' => $user->id, 'route' => 'users.destroy']) 
                       </td>
                     </tr>
                   @endforeach

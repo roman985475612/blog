@@ -44,6 +44,9 @@
               ]) }}
             </div>
             <div class="form-group">
+              <img src="{{ $user->getAvatar() }}" height="100%" width="100">
+            </div>
+            <div class="form-group">
               {{ Form::label('avatar', 'Аватар') }}
               {{ Form::file('avatar') }}
             </div>
@@ -53,7 +56,7 @@
         <!-- /.box-body -->
         <div class="box-footer">
           {{ Form::submit('Назад', ['class' => 'btn btn-default']) }}
-          {{ Form::submit('Добавить', ['class' => 'btn btn-success pull-right']) }}
+          {{ Form::submit('Сохранить', ['class' => 'btn btn-success pull-right']) }}
         </div>
         <!-- /.box-footer-->
       </div>

@@ -26,7 +26,6 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
-        'password',
     ];
 
     /**
@@ -62,7 +61,6 @@ class User extends Authenticatable
     {
         $obj = new static;
         $obj->fill($fields);
-        $obj->password = bcrypt($fields['password']);
         $obj->save();
 
         return $obj;
@@ -71,26 +69,51 @@ class User extends Authenticatable
     public function edit($fields)
     {
         $this->fill($fields);
-        $this->password = bcript($fields['password']);
         $this->save();
+
+        return $this;
+    }
+
+    public function generatePassword($password)
+    {
+        if ($password != null) {
+            $this->password = password_hash($password, PASSWORD_DEFAULT);
+            $this->save();
+        }
+
+        return $this;
     }
 
     public function remove()
     {
-        $this->deleteAvatarIfExists();
-        $this->delete;
+        $this->removeImage()
+             ->delete();
     }
 
-    public function uploadAvatar(UploadedFile $avatar)
+    public function uploadAvatar($avatar)
+    {
+        if ($avatar == null)
+            return;
+
+        $this->removeImage();
+
+        $filename = md5_file($avatar) . '.' . $avatar->extension();
+        
+        $avatar->storeAs('uploads', $filename);
+
+        $this->avatar = $filename;
+        $this->save();
+
+        return $this;
+    }
+
+    public function storeAvatar(UploadedFile $avatar): string
     {
         $filename = md5_file($avatar) . '.' . $avatar->extension();
         
         $avatar->storeAs('uploads', $filename);
-        
-        $this->deleteAvatarIfExists();
-        $this->avatar = $filename;
-        $this->save();
 
+        return $filename;
     }
 
     public function getAvatar(int $size = 64)
@@ -104,11 +127,13 @@ class User extends Authenticatable
         return "https://www.gravatar.com/avatar/{$digest}?d=identicon&s={$size}";
     }
 
-    public function deleteAvatarIfExists()
+    public function removeImage()
     {           
         if ($this->avatar) {
             Storage::delete('uploads/' . $this->avatar);
         }
+
+        return $this;
     }
 
     public function toggleAdmin($value)

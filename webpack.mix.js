@@ -13,6 +13,7 @@ const mix = require('laravel-mix');
 
 mix.styles([
 	'resources/assets/admin/bootstrap/css/bootstrap.min.css',
+	'resources/assets/admin/bootstrap/css/bootstrap.min.css.map',
 	'resources/assets/admin/font-awesome/4.5.0/css/font-awesome.min.css',
 	'resources/assets/admin/ionicons/2.0.1/css/ionicons.min.css',
 	'resources/assets/admin/plugins/iCheck/minimal/_all.css',
@@ -35,6 +36,7 @@ mix.scripts([
 	'resources/assets/admin/plugins/iCheck/icheck.min.js',
 	'resources/assets/admin/dist/js/app.min.js',
 	'resources/assets/admin/dist/js/demo.js',
+	'resources/assets/admin/dist/js/custom.js',
 ], 'public/js/admin.js');
 
 mix.copy('resources/assets/admin/bootstrap/fonts', 'public/fonts');

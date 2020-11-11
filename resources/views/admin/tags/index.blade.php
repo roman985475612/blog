@@ -42,10 +42,8 @@
                       <td>{{ $tag->id }}</td>
                       <td>{{ $tag->title }}</td>
                       <td>
-                        <a href="{{ route('tags.edit', ['tag' => $tag->id]) }}" class="fa fa-pencil"></a> 
-                        <a class="fa fa-remove deleteCategory" href="javascript:void(0);" id="{{$tag->id}}"></a>
-                        {{ Form::open(['route' => ['tags.destroy', $tag->id], 'method' => 'delete', 'id' => 'formDelete'.$tag->id]) }}
-                        {{ Form::close() }}
+                        <a href="{{ route('tags.edit', ['tag' => $tag->id]) }}" class="fa fa-pencil"></a>
+                        @include('admin.inc._modalDelete', ['id' => $tag->id, 'route' => 'tags.destroy']) 
                       </td>
                     </tr>
                   @endforeach
@@ -59,20 +57,4 @@
     </section>
     <!-- /.content -->
   </div>  
-@endsection
-
-@section('script')
-  <script>
-    $(function () {
-      $("#example1").DataTable();
-
-      $('.deleteCategory').click(function(){
-        if( confirm('Are you sure?') )
-        {
-          const id = $(this).attr('id');
-          $('#formDelete' + id).submit();
-        }
-      });
-    });
-  </script>    
 @endsection
