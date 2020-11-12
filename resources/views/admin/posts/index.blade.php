@@ -58,7 +58,8 @@
                           Нет тегов
                         @endforelse
                       </td>
-                      <td><img src="{{ $post->getImage() }}" height="auto" width="100"></td>
+                      <td>
+                        <img class="img-admin thumbnail" src="{{ $post->getImage() }}"></td>
                       <td>
                         <a href="{{ route('posts.edit', ['post' => $post->id]) }}" class="fa fa-pencil"></a> 
                         @include('admin.inc._modalDelete', ['id' => $post->id, 'route' => 'posts.destroy']) 

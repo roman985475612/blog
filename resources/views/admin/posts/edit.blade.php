@@ -5,25 +5,29 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Добавить пост
+        Редактировать пост
         <small>приятные слова..</small>
       </h1>
     </section>
 
     <!-- Main content -->
     <section class="content">
-      {!! Form::open(['route' => 'posts.store', 'files' => true]) !!}
+      {!! Form::open([
+        'route'  => ['posts.update', $post->id], 
+        'files'  => true,
+        'method' => 'put'
+      ]) !!}
       <!-- Default box -->
       <div class="box">
         <div class="box-header with-border">
-          <h3 class="box-title">Добавляем пост</h3>
+          <h3 class="box-title">Редактуруем пост</h3>
           @include('admin.errors')
         </div>
         <div class="box-body">
           <div class="col-md-6">
             <div class="form-group">
               {{ Form::label('title', 'Название') }}
-              {{ Form::text('title', old('title'), [
+              {{ Form::text('title', $post->title, [
                 'class' => 'form-control', 
                 'placeholder' => 'Название',
                 'autofocus',
@@ -31,48 +35,49 @@
             </div>
             <div class="form-group">
               {{ Form::label('image', 'Лицевая картинка') }}
+              <img class="img-admin thumbnail" src="{{ $post->getImage() }}">
               {{ Form::file('image') }}
             </div>
             <div class="form-group">
               {{ Form::label('category_id', 'Категория') }}
-              {{ Form::select('category_id', $categories, null, [
+              {{ Form::select('category_id', $categories, $post->category_id, [
                 'placeholder' => 'Выберите категорию',
                 'class' => 'form-control select2',
               ]) }}
             </div>
             <div class="form-group">
-              {{ Form::label('category_id', 'Теги') }}
-              {{ Form::select('category_id', $tags, null, [
+              {{ Form::label('tags', 'Теги') }}
+              {{ Form::select('tags[]', $tags, $post->getTagsId(), [
                 'multiple' => 'multiple',
                 'data-placeholder' => 'Выберите теги',
                 'class' => 'form-control select2',
               ]) }}
             </div>
             <div class="form-group">
-              {{ Form::label('created_at', 'Дата:') }}
+              {{ Form::label('date', 'Дата:') }}
               <div class="input-group">
                 <div class="input-group-addon">
                   <i class="fa fa-calendar"></i>
                 </div>
-                {{ Form::text('created_at', old('create_at'), [
+                {{ Form::text('date', $post->date, [
                   'id' => 'datepicker',
                   'class' => 'form-control pull-right',
                 ]) }}
               </div>
             </div>
             <div class="form-check">
-              {{ Form::checkbox('is_featured', 'value', true, ['class' => 'form-check-input minimal']) }}
+              {{ Form::checkbox('is_featured', '1', $post->is_featured, ['class' => 'form-check-input minimal']) }}
               {{ Form::label('is_featured', 'Рекомендовать', ['class' => 'form-check-label']) }}
             </div>
             <div class="form-check">
-              {{ Form::checkbox('status', 'value', true, ['class' => 'form-check-input minimal']) }}
+              {{ Form::checkbox('status', '1', $post->status, ['class' => 'form-check-input minimal']) }}
               {{ Form::label('status', 'Черновик', ['class' => 'form-check-label']) }}
             </div>
           </div>
           <div class="col-md-12">
             <div class="form-group">
               {{ Form::label('content', 'Полный текст') }}
-              {{ Form::textarea('content', old('content'), [
+              {{ Form::textarea('content', $post->content, [
                 'class' => 'form-control',
                 'col' => '30',
                 'row' => '10',
@@ -84,7 +89,7 @@
         <!-- /.box-body -->
         <div class="box-footer">
           {{ Form::submit('Назад', ['class' => 'btn btn-default']) }}
-          {{ Form::submit('Добавить', ['class' => 'btn btn-success pull-right']) }}
+          {{ Form::submit('Сохранить', ['class' => 'btn btn-success pull-right']) }}
         </div>
         <!-- /.box-footer-->
       </div>
@@ -93,22 +98,4 @@
     </section>
     <!-- /.content -->
   </div>
-@endsection
-
-@section('script')
-  <script>
-    $(function () {
-      //Initialize Select2 Elements
-      $(".select2").select2();
-      //Date picker
-      $('#datepicker').datepicker({
-        autoclose: true
-      });
-      //iCheck for checkbox and radio inputs
-      $('input[type="checkbox"].minimal, input[type="radio"].minimal').iCheck({
-        checkboxClass: 'icheckbox_minimal-blue',
-        radioClass: 'iradio_minimal-blue'
-      });
-    });
-  </script>
 @endsection

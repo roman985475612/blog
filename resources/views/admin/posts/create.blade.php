@@ -41,8 +41,8 @@
               ]) }}
             </div>
             <div class="form-group">
-              {{ Form::label('tag_ids', 'Теги') }}
-              {{ Form::select('tag_ids', $tags, null, [
+              {{ Form::label('tags', 'Теги') }}
+              {{ Form::select('tags[]', $tags, null, [
                 'multiple' => 'multiple',
                 'data-placeholder' => 'Выберите теги',
                 'class' => 'form-control select2',
@@ -61,11 +61,11 @@
               </div>
             </div>
             <div class="form-check">
-              {{ Form::checkbox('is_featured', 'value', true, ['class' => 'form-check-input minimal']) }}
+              {{ Form::checkbox('is_featured', '1', true, ['class' => 'form-check-input minimal']) }}
               {{ Form::label('is_featured', 'Рекомендовать', ['class' => 'form-check-label']) }}
             </div>
             <div class="form-check">
-              {{ Form::checkbox('status', 'value', true, ['class' => 'form-check-input minimal']) }}
+              {{ Form::checkbox('status', '1', true, ['class' => 'form-check-input minimal']) }}
               {{ Form::label('status', 'Черновик', ['class' => 'form-check-label']) }}
             </div>
           </div>

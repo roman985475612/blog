@@ -114,6 +114,11 @@ class Post extends Model
         return $this->tags->pluck('title')->all();
     }
 
+    public function getTagsId()
+    {
+        return $this->tags->pluck('id')->all();
+    }
+
     public function setCategory($category_id)
     {
         if (is_null($category_id)) return;
@@ -124,7 +129,7 @@ class Post extends Model
 
     public function setTags($tags_list)
     {
-        if ($tags_list === null) { return; }
+        if (is_null($tags_list)) { return; }
 
         $this->tags()->sync($tags_list);
     }
@@ -174,7 +179,11 @@ class Post extends Model
     public function setDateAttribute($value)
     {
         $date = Carbon::createFromFormat('d/m/y', $value)->format('Y-m-d');
-
         $this->attributes['date'] = $date;
+    }
+
+    public function getDateAttribute($value)
+    {
+        return Carbon::createFromFormat('Y-m-d', $value)->format('d/m/y');
     }
 }
