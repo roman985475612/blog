@@ -44,7 +44,7 @@
                       <td>{{ $user->id }}</td>
                       <td>{{ $user->name }}</td>
                       <td>{{ $user->email }}</td>
-                      <td><img src="{{ $user->getAvatar() }}" height="auto" width="100"></td>
+                      <td><img class="img-admin thumbnail" src="{{ $user->getAvatar() }}"></td>
                       <td>
                         <a href="{{ route('users.edit', ['user' => $user->id]) }}" class="fa fa-pencil"></a> 
                         @include('admin.inc._modalDelete', ['id' => $user->id, 'route' => 'users.destroy']) 
