@@ -76,6 +76,16 @@
           </div>
           <div class="col-md-12">
             <div class="form-group">
+              {{ Form::label('description', 'Описание') }}
+              {{ Form::textarea('description', $post->description, [
+                'class' => 'form-control',
+                'col' => '30',
+                'row' => '5',
+              ]) }}
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="form-group">
               {{ Form::label('content', 'Полный текст') }}
               {{ Form::textarea('content', $post->content, [
                 'class' => 'form-control',

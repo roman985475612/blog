@@ -35,6 +35,7 @@
                     <th>Название</th>
                     <th>Категория</th>
                     <th>Теги</th>
+                    <th>Описание</th>
                     <th>Картинка</th>
                     <th>Действия</th>
                   </tr>
@@ -58,6 +59,7 @@
                           Нет тегов
                         @endforelse
                       </td>
+                      <td>{!! $post->description !!}</td>
                       <td>
                         <img class="img-admin thumbnail" src="{{ $post->getImage() }}"></td>
                       <td>

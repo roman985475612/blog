@@ -8,7 +8,8 @@ use App\Http\Controllers\Admin\TagsController;
 use App\Http\Controllers\Admin\UsersController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', [PageController::class, 'index']);
+Route::get('/', [PageController::class, 'index'])->name('home');
+Route::get('/post/{slug}.html', [PageController::class, 'show'])->name('post.show');
 
 Route::prefix('admin')->group(function () {
     Route::get('/', [DashboardController::class, 'index']);

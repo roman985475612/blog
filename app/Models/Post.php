@@ -18,7 +18,7 @@ class Post extends Model
     const IS_STANDART = 0;
     const IS_FEATURED = 1;
 
-    protected $fillable = ['title', 'content', 'date'];
+    protected $fillable = ['title', 'content', 'date', 'description'];
 
     public function sluggable()
     {
@@ -92,9 +92,10 @@ class Post extends Model
 
     public function getImage()
     {
-        $filename = (is_null($this->image)) ? 'no-image.png' : $this->image;
-
-        return '/uploads/' . $filename;
+        if (is_null($this->image))
+            return '/uploads/no-image.png';
+        else
+            return '/uploads/' . $this->image;
     }
 
     public function removeImage()
@@ -185,5 +186,25 @@ class Post extends Model
     public function getDateAttribute($value)
     {
         return Carbon::createFromFormat('Y-m-d', $value)->format('d/m/y');
+    }
+
+    public function getDate()
+    {
+        return Carbon::createFromFormat('d/m/y', $this->date)->format('F d, Y');
+    }
+
+    public function hasPrevious()
+    {
+        return static::where('id', '<', $this->id)->max('id');
+    }
+
+    public function hasNext()
+    {
+        return static::where('id', '>', $this->id)->min('id');
+    }
+
+    public function related()
+    {
+        return static::all()->except($this->id);
     }
 }
