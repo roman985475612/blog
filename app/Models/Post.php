@@ -28,6 +28,27 @@ class Post extends Model
             ]
         ];
     }
+    
+    public static function getPopular()
+    {
+        return static::orderBy('views', 'desc')
+            ->take(3)
+            ->get();
+    }
+
+    public static function getFeatured()
+    {
+        return static::where('is_featured', 1)
+            ->take(3)
+            ->get();
+    }
+
+    public static function getRecent()
+    {
+        return static::orderBy('date', 'desc')
+            ->take(3)
+            ->get();
+    }
 
     public function category()
     {
@@ -105,9 +126,9 @@ class Post extends Model
         }
     }
 
-    public function getCategoryTitle()
+    public function hasCategory()
     {
-        return ( $this->category !== null ) ? $this->category->title : null;
+        return $this->category !== null;
     }
 
     public function getTagsTitle()
@@ -122,16 +143,12 @@ class Post extends Model
 
     public function setCategory($category_id)
     {
-        if (is_null($category_id)) return;
-
         $this->category_id = $category_id;
         $this->save();
     }
 
     public function setTags($tags_list)
     {
-        if (is_null($tags_list)) { return; }
-
         $this->tags()->sync($tags_list);
     }
 

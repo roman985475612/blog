@@ -46,8 +46,8 @@
                       <td>{{ $post->id }}</td>
                       <td>{{ $post->title }}</td>
                       <td>
-                        @if ($post->getCategoryTitle())
-                          {{ $post->getCategoryTitle() }}    
+                        @if ($post->hasCategory())
+                          {{ $post->category->title }}
                         @else
                           Нет категории
                         @endif

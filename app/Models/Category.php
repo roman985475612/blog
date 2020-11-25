@@ -25,4 +25,9 @@ class Category extends Model
     {
         return $this->hasMany(Post::class);
     }
+
+    public static function getAll()
+    {
+        return static::with('posts')->get();
+    }
 }
