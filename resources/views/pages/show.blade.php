@@ -1,7 +1,6 @@
 @extends('layout')
 
 @section('content')
-    <!--main content start-->
 <div class="main-content">
     <div class="container">
         <div class="row">
@@ -154,6 +153,7 @@
         </div>
     </div>
 </div>
-<!-- end main content-->
+
+@parent
 
 @endsection

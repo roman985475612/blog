@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Blog</title>
+    <title>@section('title')Marlin Blog @show</title>
 
     <!-- common css -->
     <link rel="stylesheet" href="/css/front.css">
@@ -42,9 +42,13 @@
                 </ul>
 
                 <ul class="nav navbar-nav text-uppercase pull-right">
-                    <li><a href="#">Register</a></li>
-                    <li><a href="about-me.html">Login</a></li>
-                    <li><a href="contact.html">My profile</a></li>
+                    @guest
+                        <li><a href="{{ route('register') }}">Register</a></li>
+                        <li><a href="{{ route('login') }}">Login</a></li>
+                    @else
+                        <li><a href="{{ route('profile') }}">My profile</a></li>
+                        <li><a href="{{ route('logout') }}">Logout</a></li>
+                    @endguest
                 </ul>
 
             </div>
@@ -63,7 +67,42 @@
     <!-- /.container-fluid -->
 </nav>
 
-@yield('content')
+@section('content')
+    <div id="footer">
+        <div class="footer-instagram-section">
+            <h3 class="footer-instagram-title text-center text-uppercase">Instagram</h3>
+
+            <div id="footer-instagram" class="owl-carousel">
+
+                <div class="item">
+                    <a href="#"><img src="/images/ins-1.jpg" alt=""></a>
+                </div>
+                <div class="item">
+                    <a href="#"><img src="/images/ins-2.jpg" alt=""></a>
+                </div>
+                <div class="item">
+                    <a href="#"><img src="/images/ins-3.jpg" alt=""></a>
+                </div>
+                <div class="item">
+                    <a href="#"><img src="/images/ins-4.jpg" alt=""></a>
+                </div>
+                <div class="item">
+                    <a href="#"><img src="/images/ins-5.jpg" alt=""></a>
+                </div>
+                <div class="item">
+                    <a href="#"><img src="/images/ins-6.jpg" alt=""></a>
+                </div>
+                <div class="item">
+                    <a href="#"><img src="/images/ins-7.jpg" alt=""></a>
+                </div>
+                <div class="item">
+                    <a href="#"><img src="/images/ins-8.jpg" alt=""></a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+@show
 
 <footer class="footer-widget-section">
     <div class="container">
