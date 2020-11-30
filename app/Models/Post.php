@@ -50,6 +50,11 @@ class Post extends Model
             ->get();
     }
 
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
+
     public function category()
     {
         return $this->belongsTo(Category::class);
@@ -223,5 +228,10 @@ class Post extends Model
     public function related()
     {
         return static::all()->except($this->id);
+    }
+
+    public function getComments()
+    {
+        return $this->comments()->where('status', Comment::ALLOW)->get();
     }
 }

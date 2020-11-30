@@ -5281,3 +5281,7 @@ img.profile-image
 
 
 }
+.avatar {
+    height: auto;
+    width: 80px;
+}

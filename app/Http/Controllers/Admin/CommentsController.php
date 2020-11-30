@@ -3,10 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Category;
+use App\Models\Comment;
 use Illuminate\Http\Request;
 
-class CategoriesController extends Controller
+class CommentsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,11 +15,9 @@ class CategoriesController extends Controller
      */
     public function index()
     {
-        $categories = Category::all();
+        $comments = Comment::all();
 
-        return view('admin.categories.index', [
-            'categories' => $categories,
-        ]);
+        return view('admin.comments.index', compact('comments'));
     }
 
     /**
@@ -29,7 +27,7 @@ class CategoriesController extends Controller
      */
     public function create()
     {
-        return view('admin.categories.create');
+        //
     }
 
     /**
@@ -40,54 +38,61 @@ class CategoriesController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, [
-            'title' => 'required',
-        ]);
+        //
+    }
 
-        Category::create($request->all());
-
-        return redirect()->route('categories.index');
+    /**
+     * Display the specified resource.
+     *
+     * @param  \App\Models\Comment  $comment
+     * @return \Illuminate\Http\Response
+     */
+    public function show(Comment $comment)
+    {
+        //
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Category  $category
+     * @param  \App\Models\Comment  $comment
      * @return \Illuminate\Http\Response
      */
-    public function edit(Category $category)
+    public function edit(Comment $comment)
     {
-        return view('admin.categories.edit', ['category' => $category]);
+        //
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Category  $category
+     * @param  \App\Models\Comment  $comment
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Category $category)
+    public function update(Request $request, Comment $comment)
     {
-        $this->validate($request, [
-            'title' => 'required',
-        ]);
-
-        $category->update($request->all());
-
-        return redirect()->route('categories.index');
+        //
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Category  $category
+     * @param  \App\Models\Comment  $comment
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Category $category)
+    public function destroy(Comment $comment)
     {
-        $category->delete();
+        $comment->remove();
+        return redirect()->route('comments.index');
+    }
 
-        return redirect()->route('categories.index');
+    public function status($id)
+    {
+        $comment = Comment::find($id);
+        $status = $comment->toggleStatus();
+        $newCommentsCount = Comment::newCommentsCount();
+
+        return compact('status', 'newCommentsCount');
     }
 }

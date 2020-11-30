@@ -12,14 +12,16 @@ class Comment extends Model
     const DISALLOW = 0;
     const ALLOW = 1;
 
+    protected $fillable = ['text', 'post_id', 'user_id'];
+
     public function post()
     {
-        return $this->hasOne(Post::class);
+        return $this->belongsTo(Post::class);
     }
 
     public function author()
     {
-        return $this->hasOne(User::class);
+        return $this->belongsTo(User::class, 'user_id');
     }
 
     public function allow()
@@ -41,10 +43,17 @@ class Comment extends Model
     public function toggleStatus()
     {
         if ($this->status == Comment::DISALLOW) {
-            return $this->allow();
+            $this->status = Comment::ALLOW;
+        } else {
+            $this->status = Comment::DISALLOW;
         }
+        $this->save();
+        return $this->status;
+    }
 
-        return $this->disAllow();
+    public static function newCommentsCount()
+    {
+        return Comment::where('status', Comment::DISALLOW)->count();
     }
 
     public function remove()

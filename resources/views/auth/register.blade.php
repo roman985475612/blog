@@ -10,7 +10,6 @@
                 <div class="leave-comment mr0">
                     <h3 class="text-uppercase">Register</h3>
                     <br>
-                    @include('admin.errors')
                     <form class="form-horizontal contact-form" role="form" method="post" action="/register">
                         @csrf
                         <div class="form-group">

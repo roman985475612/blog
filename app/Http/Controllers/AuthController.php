@@ -51,7 +51,7 @@ class AuthController extends Controller
         ]);
 
         if (!$login) {
-            return redirect()->back()->with('status', 'Неправельный логин или пароль');
+            return redirect()->back()->with('error', 'Неправельный логин или пароль');
         }
 
         return redirect()->route('home');
@@ -85,7 +85,7 @@ class AuthController extends Controller
         $user->generatePassword($request->input('password'));
         $user->uploadAvatar($request->file('avatar'));
 
-        return redirect()->route('profile');
+        return redirect()->route('profile')->with('success', 'Ваш профиль обновлен!');
 
     }
 }

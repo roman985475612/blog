@@ -12,7 +12,6 @@
             <div class="col-md-8">
                 <div class="leave-comment mr0">
                     <h3 class="text-uppercase">My profile</h3>
-                    @include('admin.errors')
                     <br>
                     <img src="{{ Auth::user()->getAvatar(256) }}" alt="" class="profile-image">
                     <form class="form-horizontal contact-form" 

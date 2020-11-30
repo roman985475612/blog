@@ -7,12 +7,9 @@
     <div class="container">
         <div class="row">
             <div class="col-md-8">
-
                 <div class="leave-comment mr0">
-                    
                     <h3 class="text-uppercase">Login</h3>
                     <br>
-                    @include('admin.errors')
                     <form class="form-horizontal contact-form" role="form" method="post" action="/login">
                         @csrf
                         <div class="form-group">

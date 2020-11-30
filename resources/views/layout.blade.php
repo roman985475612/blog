@@ -67,6 +67,10 @@
     <!-- /.container-fluid -->
 </nav>
 
+<div class="container">
+    @include('admin.errors')
+</div>
+
 @section('content')
     <div id="footer">
         <div class="footer-instagram-section">
