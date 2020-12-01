@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Exception;
 
@@ -79,7 +80,7 @@ class Post extends Model
     {
         $obj = new static;
         $obj->fill($fields);
-        $obj->user_id = 1;
+        $obj->user_id = Auth::user()->id;
         $obj->save();
 
         return $obj;

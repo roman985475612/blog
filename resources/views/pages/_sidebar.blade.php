@@ -1,5 +1,14 @@
 <div class="col-md-4" data-sticky_column>
     <div class="primary-sidebar">
+        <aside class="widget news-letter">
+            <h3 class="widget-title text-uppercase text-center">Get Newsletter</h3>
+            <form action="{{ route('subscribe') }}" method="POST">
+                @csrf
+                <input type="text" class="field-subscribe" name="email" placeholder="Your email address">
+                <input type="submit" value="Subscribe Now"
+                       class="text-uppercase text-center btn btn-subscribe">
+            </form>
+        </aside>
         <aside class="widget border pos-padding">
             <h3 class="widget-title text-uppercase text-center">Categories</h3>
             <ul>
@@ -60,16 +69,6 @@
                     </div>
                 </div>
             @endforeach
-        </aside>
-        <aside class="widget news-letter">
-            <h3 class="widget-title text-uppercase text-center">Get Newsletter</h3>
-
-            <form action="#">
-                <input type="email" placeholder="Your email address">
-                <input type="submit" value="Subscribe Now"
-                       class="text-uppercase text-center btn btn-subscribe">
-            </form>
-
         </aside>
     </div>
 </div>

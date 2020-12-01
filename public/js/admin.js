@@ -3113,7 +3113,6 @@ document.querySelector('tbody').addEventListener('click', event => {
         fetch(url)
             .then(response => response.json())
             .then(data => {
-                console.log(data)
                 toggleCommentStatus(id, data)
             })
 

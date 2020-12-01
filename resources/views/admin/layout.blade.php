@@ -171,11 +171,7 @@
     @include('admin.inc._sidebar')
   </aside>
 
-  <!-- =============================================== -->
-
-  <!-- Content Wrapper. Contains page content -->
   @yield('content')
-  <!-- /.content-wrapper -->
 
   <footer class="main-footer">
     <div class="pull-right hidden-xs">
